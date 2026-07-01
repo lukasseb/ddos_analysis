@@ -1,6 +1,6 @@
-# NSMP Project
+= NSMP Project
 
-## ideas
+== ideas
 
 - ask jose to coap
 
@@ -11,17 +11,14 @@
 Analyse der Nutzung von COAP in den Daten der DDOS-Attacke auf mobi3
 -> daten liegen auf mein jupyter account
 
+== presentation
 
+- 15min + 5min, unter 0:30
 
-## presentation
-
-- 15min + 5min
+180min / anzahl = zeit_p_pers
 
 1. measurement question stated clearly
 2. comprehensive description of measurement method
     - wann daten, wann gemessen, wie gemessen, wie gesammelt, wo kommen die her
 3. answer with cool graphs
     - heatmap, scatter
-
-woher kriegt man groundtruth
-iot zu internet, sind daten noch als coap zu erkennen
