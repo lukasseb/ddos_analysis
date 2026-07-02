@@ -24,6 +24,17 @@
 
 = Methodology
 
+== How was the data stored
+- 779 GiB of data
+
+== How was the data parsed
+
+== How was the data processed (1)
+
+== How was the data processed (2)
+
+== How was the data processed (3)
+
 = Evaluation
 
 = Closing
