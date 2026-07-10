@@ -42,26 +42,32 @@ FIELDS = GENERAL_FIELDS + COAP_FIELDS
 # alle potentiell wiederholbaren Felder explizit als Utf8 und lassen nur
 # echte garantiert-einwertige Felder numerisch.
 SCHEMA_OVERRIDES = {
+    # Echte Frame-Level-Felder: garantiert genau ein Wert pro Frame.
     "frame.number": pl.Int64,
     "frame.time_epoch": pl.Float64,
     "frame.time_delta": pl.Float64,
     "frame.len": pl.Int64,
     "frame.protocols": pl.Utf8,
+    # Ab hier bewusst ALLES Utf8: sobald ein Paket getunnelt/encapsuliert
+    # ist (IP-in-IP, GRE, VXLAN, ...) oder mehrere Protokoll-Instanzen im
+    # selben Frame auftauchen, joint tshark die Werte mit ',' -- z.B.
+    # "ip.proto" = "1,17" bei ICMP-in-UDP-Tunnel o.ae. Das betrifft
+    # potentiell JEDES Nicht-Frame-Feld, nicht nur die "offensichtlichen"
+    # Multi-Value-Felder. Numerisch machen wir das erst nach dem Einlesen,
+    # gezielt, nachdem klar ist welche Zeilen wirklich mehrwertig sind.
     "ip.src": pl.Utf8,
     "ip.dst": pl.Utf8,
-    "ip.proto": pl.Int64,
-    "ip.ttl": pl.Int64,
+    "ip.proto": pl.Utf8,
+    "ip.ttl": pl.Utf8,
     "ipv6.src": pl.Utf8,
     "ipv6.dst": pl.Utf8,
-    "ipv6.hlim": pl.Int64,
-    "udp.srcport": pl.Int64,
-    "udp.dstport": pl.Int64,
-    "udp.length": pl.Int64,
-    "tcp.srcport": pl.Int64,
-    "tcp.dstport": pl.Int64,
-    "tcp.len": pl.Int64,
-    # potentiell mehrfach pro Frame (z.B. mehrere DTLS-Records in einem
-    # TCP-Segment) -> als Utf8, ggf. spaeter selbst splitten/casten
+    "ipv6.hlim": pl.Utf8,
+    "udp.srcport": pl.Utf8,
+    "udp.dstport": pl.Utf8,
+    "udp.length": pl.Utf8,
+    "tcp.srcport": pl.Utf8,
+    "tcp.dstport": pl.Utf8,
+    "tcp.len": pl.Utf8,
     "dtls.record.content_type": pl.Utf8,
     "dtls.record.version": pl.Utf8,
     "dtls.handshake.type": pl.Utf8,
@@ -146,8 +152,8 @@ def main():
         separator="|",
         infer_schema=False,
         schema_overrides=SCHEMA_OVERRIDES,
-        truncate_ragged_lines=True,
         null_values=[""],
+        ignore_errors=True,
     )
     lf = lf.with_columns(pl.lit(pcap_path).alias("source_file"))
     lf.collect().write_parquet(out_path, compression="zstd")
