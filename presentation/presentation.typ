@@ -20,7 +20,7 @@
 = Intro
 == Motivation
 #v(2em)
-- at the 25th of August 2025 there was a DDOS attack on mobi3
+- starting at the 25th of August 2025 there was a DDOS attack on mobi3
 #v(0.5em)
 - part of that multi-protocol DDOS attack was CoAP traffic
 #v(0.5em)
@@ -55,10 +55,11 @@
 #v(2em)
 - 779 GiB of data: _net/archive/ddos_data_
 #v(0.5em)
+- only a subset of data was used (next slide)
+#v(0.5em)
 - parsed with #link("https://www.wireshark.org/docs/man-pages/tshark.html")[_tshark_]
 #v(0.5em)
 - _general_data_set_ and _coap_data_set_
-#v(0.5em)
 
 = Plots
 == General Analysis
@@ -93,7 +94,7 @@
 == CoAP specific Analysis
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_overview.png", width: 100%),
+    image("../plots/batch_1_1000/coap/coap_overview.png", width: 80%),
     caption: "Overview of CoAP data"
   )
 ]
@@ -148,9 +149,9 @@
   ]
 ]
 
-== Other findings
+== Other Findings
 #v(2em)
-- about 7% of the DDOS attack packets consists of CoAP packets 
+- only around 0.7% of the DDOS attack packets consists of CoAP packets
 #v(0.5em)
 - as expected is most of the data transported by UDP
 #v(0.5em)
