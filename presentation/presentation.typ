@@ -63,43 +63,44 @@
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/overview.png", width: 90%),
-    caption: "Overview of analyzed data"
+    image("../plots/batch_1_1000/general/overview.png", width: 90%),
+    caption: "_general_data_set_"
   )
 ]
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/overview.png", width: 90%),
-    caption: "Overview of analyzed data"
+    image("../plots/batch_1_1000/coap/overview.png", width: 90%),
+    caption: "_coap_data_set_"
   )
 ]
 
 = Plots
+== General Analysis
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/overview.png", width: 90%),
+    image("../plots/batch_1_1000/general/overview.png", width: 90%),
     caption: "Overview of analyzed data"
   )
-]== General Analysis
+]
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/packets_direction.png", width: 100%),
+    image("../plots/batch_1_1000/general/packets_direction.png", width: 100%),
     caption: "Share of Packet Directions"
   )
 ]
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/ip_proto_distr.png", width: 100%),
+    image("../plots/batch_1_1000/general/ip_proto_distr.png", width: 100%),
     caption: "Share of IP Protocols"
   )
 ]
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/top_source_ips_bytes.png", height: 90%),
+    image("../plots/batch_1_1000/general/top_source_ips_bytes.png", height: 90%),
     caption: "Top Talkers"
   )
 ]
@@ -107,7 +108,7 @@
 == CoAP specific Analysis
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_overview.png", width: 80%),
+    image("../plots/batch_1_1000/coap/overview.png", width: 80%),
     caption: "Overview of CoAP data"
   )
 ]
