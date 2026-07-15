@@ -114,7 +114,7 @@
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_ip_proto_distr.png", width: 100%),
+    image("../plots/batch_1_1000/coap/ip_proto.png", width: 100%),
     caption: "Share of IP Protocols of CoAP packets"
   )
 ]
