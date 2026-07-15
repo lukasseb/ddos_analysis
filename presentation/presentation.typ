@@ -114,7 +114,7 @@
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_ip_proto_distr.png", width: 100%),
+    image("../plots/batch_1_1000/coap/ip_proto.png", width: 100%),
     caption: "Share of IP Protocols of CoAP packets"
   )
 ]
@@ -151,14 +151,14 @@
 == Answer to the Research Question
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_amplification_category_bar.png", width: 90%),
+    image("../plots/batch_1_1000/coap/experimental_amplification_category_bar.png", width: 90%),
     caption: "Amplification Attacks Categories"
   )
 ]
 
 #align(center+horizon)[
   #text(size: 2em)[
-    Yes, but in the attack only Simple and Observe were used!
+    Yes, but in the attack most were of the Simple Category
   ]
 ]
 
