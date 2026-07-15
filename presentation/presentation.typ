@@ -32,7 +32,6 @@
 #v(0.5em)
 - are a type of reflection-based volumetric DDoS/DoS attacks
 #v(0.5em)
-- TODO: which amplification factor, see @irtf-t2trg-amplification-attacks-05
 
 #pagebreak()
 #v(2em)
