@@ -61,14 +61,27 @@
 #v(0.5em)
 - _general_data_set_ and _coap_data_set_
 
-= Plots
-== General Analysis
 #align(center+horizon)[
   #figure(
     image("../plots/batch_1_1000/overview.png", width: 90%),
     caption: "Overview of analyzed data"
   )
 ]
+
+#align(center+horizon)[
+  #figure(
+    image("../plots/batch_1_1000/overview.png", width: 90%),
+    caption: "Overview of analyzed data"
+  )
+]
+
+= Plots
+#align(center+horizon)[
+  #figure(
+    image("../plots/batch_1_1000/overview.png", width: 90%),
+    caption: "Overview of analyzed data"
+  )
+]== General Analysis
 
 #align(center+horizon)[
   #figure(
