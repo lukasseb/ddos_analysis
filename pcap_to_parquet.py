@@ -29,8 +29,8 @@ schema = {
     "frame.protocols": pl.String,
     "ip.src": pl.String,
     "ip.dst": pl.String,
-    "ip.proto": pl.Int64,
-    "ip.ttl": pl.UInt8,
+    "ip.proto": pl.String,
+    "ip.ttl": pl.String,
     "ipv6.src": pl.String,
     "ipv6.dst": pl.String,
     "ipv6.hlim": pl.UInt8,
@@ -61,30 +61,45 @@ schema = {
 
 multi_value_fields = {"ip.proto", "ip.ttl", "coap.opt.uri_path", "coap.opt.uri_query"}
 
-def run_tshark(pcap_path: str) -> bytes:
+
+def run_tshark(pcap_path: str, csv_path: Path) -> None:
+    """tshark schreibt direkt in csv_path, stderr geht in eine Log-Datei
+    statt in den RAM/ins Notebook (kann bei vielen malformed Paketen riesig werden)."""
     cmd = [
         "tshark", "-r", pcap_path, "-n",
         "-T", "fields",
         "-E", "header=y",
         "-E", "separator=|",
         "-E", "aggregator=,",
-        "-E", "quote=n",
+        "-E", "quote=d",
         "-E", "occurrence=a",
     ]
     for f in fields:
         cmd += ["-e", f]
 
-    result = subprocess.run(
-        cmd,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=True,
-    )
+    err_path = csv_path.with_suffix(".stderr.log")
 
-    if result.stderr:
-        print(result.stderr.decode(errors="replace"), file=sys.stderr)
+    with open(csv_path, "wb") as out_f, open(err_path, "wb") as err_f:
+        try:
+            subprocess.run(
+                cmd,
+                stdout=out_f,
+                stderr=err_f,
+                check=True,
+            )
+        except subprocess.CalledProcessError as e:
+            # Nur die letzten Zeilen der stderr-Log ausgeben statt alles
+            tail = err_path.read_text(errors="replace").splitlines()[-20:]
+            print(
+                f"[error] tshark exit {e.returncode} bei {pcap_path}. "
+                f"Volles Log: {err_path}\nLetzte Zeilen:\n" + "\n".join(tail),
+                file=sys.stderr,
+            )
+            raise
 
-    return result.stdout
+    # Falls stderr leer ist, Log-Datei wieder entfernen (kein Rauschen im Ordner)
+    if err_path.exists() and err_path.stat().st_size == 0:
+        err_path.unlink()
 
 def main():
     if len(sys.argv) not in (3, 4):
@@ -97,20 +112,21 @@ def main():
     pcap_path, out_path = sys.argv[1], sys.argv[2]
     keep_csv = "--keep-csv" in sys.argv[3:]
 
-    raw = run_tshark(pcap_path)
-
-    if not raw.strip():
-        print(f"[warn] keine Pakete/leer: {pcap_path}", file=sys.stderr)
-        return
-
     csv_path = Path(out_path).with_suffix(".csv")
-    csv_path.write_bytes(raw)
+
+    run_tshark(pcap_path, csv_path)
+
+    if not csv_path.exists() or csv_path.stat().st_size == 0:
+        print(f"[warn] keine Pakete/leer: {pcap_path}", file=sys.stderr)
+        csv_path.unlink(missing_ok=True)
+        return
 
     lf = pl.scan_csv(
         csv_path,
         separator="|",
+        quote_char='"',
         infer_schema=False,
-        schema_overrides=schema,
+        schema=schema,
         truncate_ragged_lines=True,
         # ignore_errors=True,
         null_values=[""],
@@ -122,14 +138,13 @@ def main():
         (pl.col("frame.time_epoch") * 1_000_000)
         .cast(pl.Int64)
         .cast(pl.Datetime(time_unit="us"))
-        .alias("frame.time")
+        .alias("frame.datetime")
     )
 
-    lf.collect().write_parquet(out_path, compression="zstd")
+    lf.sink_parquet(out_path, compression="zstd")
 
     if not keep_csv:
         csv_path.unlink(missing_ok=True)
-
 
 if __name__ == "__main__":
     main()
