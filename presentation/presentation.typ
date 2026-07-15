@@ -14,6 +14,7 @@
 
 #title-slide()
 
+#show outline: set text(size: 0.8em)
 #outline()
 
 = Intro
@@ -50,16 +51,11 @@
   ]
 ]
 
-= Method
-== Data
+== Method
 #v(2em)
 - 779 GiB of data: _net/archive/ddos_data_
+#v(0.5em)
 - parsed with #link("https://www.wireshark.org/docs/man-pages/tshark.html")[_tshark_]
-- scope set to ...
-
-== Evaluation
-#v(2em)
-- Only incoming packets (by IP address)
 #v(0.5em)
 - _general_data_set_ and _coap_data_set_
 #v(0.5em)
@@ -68,7 +64,7 @@
 == General Analysis
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/overview.png", height: 100%),
+    image("../plots/batch_1_1000/overview.png", width: 90%),
     caption: "Overview of analyzed data"
   )
 ]
@@ -76,7 +72,7 @@
 #align(center+horizon)[
   #figure(
     image("../plots/batch_1_1000/packets_direction.png", width: 100%),
-    caption: "Overview of analyzed data"
+    caption: "Share of Packet Directions"
   )
 ]
 
@@ -104,21 +100,21 @@
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_ip_proto_distr.png", height: 90%),
+    image("../plots/batch_1_1000/coap/coap_ip_proto_distr.png", width: 100%),
     caption: "Share of IP Protocols of CoAP packets"
   )
 ]
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_message_types.png", width: 90%),
+    image("../plots/batch_1_1000/coap/coap_message_types.png", width: 100%),
     caption: "Share of CoAP Message Types"
   )
 ]
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_code_distribution.png", width: 90%),
+    image("../plots/batch_1_1000/coap/coap_code_distribution.png", width: 100%),
     caption: "Share of CoAP Codes"
   )
 ]
