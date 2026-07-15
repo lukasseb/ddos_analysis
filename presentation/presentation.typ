@@ -121,14 +121,14 @@
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_message_types.png", width: 100%),
+    image("../plots/batch_1_1000/coap/coap_message_type_bar.png", width: 100%),
     caption: "Share of CoAP Message Types"
   )
 ]
 
 #align(center+horizon)[
   #figure(
-    image("../plots/batch_1_1000/coap/coap_code_distribution.png", width: 100%),
+    image("../plots/batch_1_1000/coap/method_or_code_bar.png", width: 100%),
     caption: "Share of CoAP Codes"
   )
 ]
